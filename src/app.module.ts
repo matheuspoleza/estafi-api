@@ -6,8 +6,9 @@ import { BullModule } from '@nestjs/bull';
   imports: [
     BullModule.forRoot({
       redis: {
-        host: process.env.REDISHOST || 'localhost',
-        port: parseInt(process.env.REDISPORT) || 6379,
+        host: process.env.REDISHOST,
+        port: process.env.REDISPORT as unknown as number,
+        password: process.env.REDIS_PASSWORD,
       },
     }),
     WhatsappModule,
