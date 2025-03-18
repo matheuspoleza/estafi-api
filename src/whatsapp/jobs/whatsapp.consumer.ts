@@ -1,13 +1,10 @@
 import { Processor, Process } from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
 import { Job } from 'bull';
-import { WhatsappService } from '../whatsapp.service';
 
 @Processor('whatsapp')
 export class WhatsappConsumer {
   private readonly logger = new Logger(WhatsappConsumer.name);
-
-  constructor(private readonly whatsappService: WhatsappService) {}
 
   @Process('messageReceived')
   async processMessage(job: Job<any>) {

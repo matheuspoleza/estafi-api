@@ -7,6 +7,8 @@ export class WhatsappQueueService {
   constructor(@InjectQueue('whatsapp') private whatsappQueue: Queue) {}
 
   async addMessageToQueue(data: any) {
+    console.log('data', data);
+
     return this.whatsappQueue.add('messageReceived', data, {
       attempts: 3,
       backoff: {
