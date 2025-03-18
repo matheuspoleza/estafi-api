@@ -1,9 +1,16 @@
 import { Module } from '@nestjs/common';
-import { WhatsappController } from './whatsapp/whatsapp.controller';
-import { WhatsappService } from './whatsapp/whatsapp.service';
+import { WhatsappModule } from './whatsapp/whatsapp.module';
+import { BullModule } from '@nestjs/bull';
 
 @Module({
-  controllers: [WhatsappController],
-  providers: [WhatsappService],
+  imports: [
+    BullModule.forRoot({
+      redis: {
+        host: process.env.REDIS_HOST,
+        port: parseInt(process.env.REDIS_PORT),
+      },
+    }),
+    WhatsappModule,
+  ],
 })
 export class AppModule {}
