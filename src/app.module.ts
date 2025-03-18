@@ -8,7 +8,6 @@ import { BullModule } from '@nestjs/bull';
       redis: {
         host: process.env.REDISHOST || 'localhost',
         port: parseInt(process.env.REDISPORT) || 6379,
-        password: process.env.REDIS_PASSWORD || '123456',
       },
     }),
     WhatsappModule,
