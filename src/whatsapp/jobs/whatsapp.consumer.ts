@@ -12,7 +12,6 @@ export class WhatsappConsumer {
 
     try {
       const webhookUrl = `${process.env.N8N_WEBHOOK_HOST}/whatsapp/processar-mensagem`;
-      console.log('webhookUrl', webhookUrl);
 
       const response = await fetch(webhookUrl, {
         method: 'POST',

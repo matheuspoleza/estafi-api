@@ -7,8 +7,6 @@ export class WhatsappController {
 
   @Post('webhook/message-received')
   async messageReceived(@Body() body: any): Promise<any> {
-    console.log(body);
-
     await this.whatsappQueueService.addMessageToQueue(body);
 
     return {
