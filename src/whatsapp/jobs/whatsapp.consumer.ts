@@ -1,17 +1,21 @@
 import { Processor, Process } from '@nestjs/bull';
-import { Logger } from '@nestjs/common';
+import { Logger, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Job } from 'bull';
 
+@Injectable()
 @Processor('whatsapp')
 export class WhatsappConsumer {
   private readonly logger = new Logger(WhatsappConsumer.name);
+
+  constructor(private configService: ConfigService) {}
 
   @Process('messageReceived')
   async processMessage(job: Job<any>) {
     this.logger.debug(`Processando mensagem... ${JSON.stringify(job.data)}`);
 
     try {
-      const webhookUrl = `${process.env.N8N_WEBHOOK_HOST}/whatsapp/processar-mensagem`;
+      const webhookUrl = `${this.configService.get('N8N_WEBHOOK_HOST')}/whatsapp/processar-mensagem`;
 
       const response = await fetch(webhookUrl, {
         method: 'POST',
