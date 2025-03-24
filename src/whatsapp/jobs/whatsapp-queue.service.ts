@@ -65,6 +65,7 @@ export class WhatsappQueueService {
       phoneNumber,
       instanceId,
       instanceName,
+      delay: 10000,
     });
   }
 }
