@@ -66,7 +66,7 @@ export class WhatsappQueueService {
       },
       {
         jobId: sessionId,
-        delay: 30000,
+        delay: 20000,
       },
     );
   }

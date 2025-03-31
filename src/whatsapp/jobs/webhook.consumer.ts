@@ -1,17 +1,24 @@
-import { Process, Processor } from '@nestjs/bull';
+import { InjectQueue, Process, Processor } from '@nestjs/bull';
 import { Logger, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Job } from 'bull';
+import { Job, Queue } from 'bull';
 
 @Injectable()
 @Processor('webhook')
 export class WebhookConsumer {
   private readonly logger = new Logger(WebhookConsumer.name);
 
-  constructor(private configService: ConfigService) {}
+  constructor(
+    private configService: ConfigService,
+    @InjectQueue('whatsapp') private whatsappQueue: Queue,
+  ) {}
 
   @Process('batch-respond-messages')
   async batchRespondMessages(job: Job<any>) {
+    const messagesQueueJobs = await this.whatsappQueue
+      .getJobs(['active', 'delayed', 'completed', 'waiting'])
+      .then((jobs) => jobs.filter((job) => job?.id && job.id === job.id));
+
     try {
       const webhookUrl = `${this.configService.get('N8N_WEBHOOK_HOST')}/whatsapp/messages`;
 
@@ -29,6 +36,9 @@ export class WebhookConsumer {
         );
       } else {
         this.logger.debug('Batch respond messages called successfully');
+        messagesQueueJobs.forEach(async (job) => {
+          await job.remove();
+        });
       }
     } catch (error) {
       this.logger.error(`Error batch respond messages: ${error.message}`);
