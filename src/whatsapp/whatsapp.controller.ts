@@ -18,6 +18,7 @@ export class WhatsappController {
       phoneNumber: body.phoneNumber,
       instanceId: body.instanceId,
       instanceName: body.instanceName,
+      datetime: body.datetime,
       body,
     });
 
@@ -27,6 +28,7 @@ export class WhatsappController {
       phoneNumber: body.phoneNumber,
       instanceId: body.instanceId,
       instanceName: body.instanceName,
+      datetime: body.datetime,
     });
 
     return {

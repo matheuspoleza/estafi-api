@@ -25,13 +25,13 @@ export class WebhookConsumer {
 
       if (!response.ok) {
         this.logger.error(
-          `Failed to call webhook: ${response.status} ${response.statusText}`,
+          `Failed to call batch respond messages: ${response.status} ${response.statusText}`,
         );
       } else {
-        this.logger.debug('Webhook called successfully');
+        this.logger.debug('Batch respond messages called successfully');
       }
     } catch (error) {
-      this.logger.error(`Error processing message: ${error.message}`);
+      this.logger.error(`Error batch respond messages: ${error.message}`);
     }
 
     return true;

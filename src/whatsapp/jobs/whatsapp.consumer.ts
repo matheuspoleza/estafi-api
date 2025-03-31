@@ -27,10 +27,10 @@ export class WhatsappConsumer {
 
       if (!response.ok) {
         this.logger.error(
-          `Failed to call webhook: ${response.status} ${response.statusText}`,
+          `Failed to call process message: ${response.status} ${response.statusText}`,
         );
       } else {
-        this.logger.debug('Webhook called successfully');
+        this.logger.debug('Process message called successfully');
       }
     } catch (error) {
       this.logger.error(`Error processing message: ${error.message}`);
