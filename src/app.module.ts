@@ -3,6 +3,7 @@ import { WhatsappModule } from './whatsapp/whatsapp.module';
 import { BullModule } from '@nestjs/bull';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UploadModule } from './upload/upload.module';
+import { ScheduleModule } from './schedule/schedule.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { UploadModule } from './upload/upload.module';
     }),
     WhatsappModule,
     UploadModule,
+    ScheduleModule,
   ],
 })
 export class AppModule {}
